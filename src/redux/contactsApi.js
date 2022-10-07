@@ -3,30 +3,46 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const contactsApi = createApi({
   reducerPath: 'contactsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://6335d27865d1e8ef2663d67f.mockapi.io/',
+    baseUrl: 'https://connections-api.herokuapp.com/',
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token;
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   tagTypes: ['Contacts'],
   endpoints: builder => ({
     getContacts: builder.query({
-      query: () => ({
-        url: `contacts/`,
-        method: 'GET',
-      }),
+      query: () => 'contacts',
       providesTags: ['Contacts'],
     }),
+
     deleteContact: builder.mutation({
-      query: id => ({
-        url: `contacts/${id}`,
+      query: contactId => ({
+        url: `contacts/${contactId}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Contacts'],
     }),
     addContact: builder.mutation({
-      query: contact => ({
-        url: `contacts/`,
+      query: body => ({
+        url: 'contacts',
         method: 'POST',
-        body: contact,
+        body,
       }),
+      invalidatesTags: ['Contacts'],
+    }),
+    updateContact: builder.mutation({
+      query(data) {
+        const { contactId, ...body } = data;
+        return {
+          url: `contacts/${contactId}`,
+          method: 'PATCH',
+          body,
+        };
+      },
       invalidatesTags: ['Contacts'],
     }),
   }),
@@ -36,4 +52,5 @@ export const {
   useGetContactsQuery,
   useDeleteContactMutation,
   useAddContactMutation,
+  useUpdateContactMutation,
 } = contactsApi;

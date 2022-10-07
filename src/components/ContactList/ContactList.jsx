@@ -19,13 +19,13 @@ const ContactList = () => {
   return (
     <List>
       {!isLoading &&
-        filteredContacts.reverse().map(({ name, id, phone }) => {
+        filteredContacts.reverse().map(({ name, id, number }) => {
           return (
             <ContactCard
             key={id}
             id={id}
             name={name}
-            number={phone}
+            number={number}
             onDeleleButton={() => deleteContact(id)}
           />            
           );

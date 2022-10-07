@@ -12,7 +12,7 @@ export const Name = styled.span`
   font-weight: 600;
   margin-right: 10px;
 `;
-export const Phone = styled.span`
+export const Number = styled.span`
   font-weight: 700;
 `;
 export const DeleteBtn = styled.button`

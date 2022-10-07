@@ -1,11 +1,11 @@
-import { ContactCards, Name, Phone, DeleteBtn } from './ContactCard.styled';
+import { ContactCards, Name, Number, DeleteBtn } from './ContactCard.styled';
 
 
-export const ContactCard = ({ name, phone, id, onDeleleButton }) => {
+export const ContactCard = ({ name, number, id, onDeleleButton }) => {
   return (
     <ContactCards>
       <Name>{name}</Name>
-      <Phone>{phone}</Phone>
+      <Number>{number}</Number>
       <DeleteBtn type="button" id={id} onClick={onDeleleButton}>
         Delete
       </DeleteBtn>
