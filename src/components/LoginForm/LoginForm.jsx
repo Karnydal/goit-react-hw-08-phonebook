@@ -13,14 +13,14 @@ import {
 import LoadingButton from '@mui/lab/LoadingButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import SendIcon from '@mui/icons-material/Send';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useLoginUserMutation } from 'redux/authApi';
 
 const theme = createTheme();
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const [login, { isLoading, isSucces, error }] = useLoginUserMutation;
+  const [login, { isLoading, isSuccess, error }] = useLoginUserMutation();
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -31,22 +31,22 @@ export default function LoginForm() {
     };
     try {
       await login(credential);
-    } catch (error) {
+    } catch (err) {
       alert('Error fetch');
     }
   };
 
   useEffect(() => {
     if (error?.status === 400) {
-      alert('Wrong email or password');
+      alert('Wrong email or password.');
     }
   }, [error?.status]);
 
   useEffect(() => {
-    if (isSucces) {
+    if (isSuccess) {
       navigate('/contacts', { replace: true });
     }
-  }, [isSucces, navigate]);
+  }, [isSuccess, navigate]);
 
   return (
     <ThemeProvider theme={theme}>
